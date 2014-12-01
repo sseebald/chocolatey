@@ -14,5 +14,13 @@ class chocolatey (
     provider  => powershell,
     subscribe => File['chocolatey script'],
     creates   => 'c:\\ProgramData\\chocolatey\\',
+    tries     => '2',
   }
+
+  reboot { 'chocolatey reboot':
+    subscribe => Exec['install chocolatey'],
+    apply     => finished,
+  }
+
+
 }
